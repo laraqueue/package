@@ -1,0 +1,30 @@
+{
+    "name": "laraqueue/package",
+    "description": "The Laraqueue Laravel Package",
+    "keywords": ["laraqueue", "laravel", "package"],
+    "homepage": "https://www.laraqueue.com",
+    "license": "MIT",
+    "type": "library",
+    "version": "1.0.0",
+    "authors": [
+        {
+            "name": "Christopher Mitchell",
+            "email": "laraqueue@gmail.com"
+        }
+    ],
+    "require": {
+        "guzzlehttp/guzzle": "^6.2",
+        "php": ">=7.1.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "~5.0"
+    },
+    "autoload": {
+       "psr-0": {
+         "Laraqueue\\": "src"
+        },
+        "files": [
+            "src/Support/helpers.php"
+        ]
+    }
+}
