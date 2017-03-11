@@ -27,7 +27,7 @@ class Dispatcher
     {
         $job->id = dispatch($job);
 
-        if($this->getToken()) {
+        if($this->getKey()) {
             $this->sendJob($job);
         }
 

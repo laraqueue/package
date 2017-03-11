@@ -53,7 +53,7 @@ trait InteractsWithLaraqueue
             'request' => $this->getRequest(),
             'server' => $this->getServer(),
             'timestamp' => Carbon::now('UTC')->toDateTimeString(),
-            'token' => env('LARAQUEUE_TOKEN'),
+            'key' => $this->getKey(),
             'user' => Auth::user(),
         ];
 
@@ -91,7 +91,7 @@ trait InteractsWithLaraqueue
             'request' => $this->getRequest(),
             'server' => $this->getServer(),
             'timestamp' => Carbon::now('UTC')->toDateTimeString(),
-            'token' => env('LARAQUEUE_TOKEN'),
+            'key' => $this->getKey(),
             'user' => Auth::user(),
         ];
 
@@ -117,6 +117,11 @@ trait InteractsWithLaraqueue
         return config('queue.default');
     }
 
+    public function getKey()
+    {
+        return config('services.laraqueue.key');
+    }
+
     protected function getQueue($job)
     {
         return array_get($this->getQueueConfig($job), 'queue', 'default');
@@ -125,11 +130,6 @@ trait InteractsWithLaraqueue
     protected function getQueueConfig($job)
     {
         return $this->getConnectionByName($this->getConnection($job));
-    }
-
-    public function getToken()
-    {
-        return config('services.laraqueue.token');
     }
 
     protected function isSync($job)

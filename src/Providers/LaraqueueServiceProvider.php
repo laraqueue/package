@@ -28,7 +28,7 @@ class LaraqueueServiceProvider extends ServiceProvider
 
     public function boot()
     {
-        if(!$this->getToken()) {
+        if(!$this->getKey()) {
             return;
         }
 
@@ -41,7 +41,7 @@ class LaraqueueServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->singleton(Client::class, function() {
-            return new Client($this->getToken());
+            return new Client($this->getKey());
         });
         $this->app->singleton(Sender::class);
         $this->app->bind('Laraqueue', Dispatcher::class);
