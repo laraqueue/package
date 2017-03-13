@@ -20,9 +20,7 @@ class Sender
 
     public function post(array $payload)
     {
-        $this->client->post($this->api, [
-            'body' => json_encode($payload)
-        ]);
+        $this->client->post($this->api, $payload);
     }
 
     public function sendEvent($event)
