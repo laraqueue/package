@@ -85,7 +85,7 @@ class LaraqueueServiceProvider extends ServiceProvider
             return;
         }
 
-        $this->app(Sender::class)->sendEvent($event);
+        app(Sender::class)->sendEvent($event);
     }
 
 }
