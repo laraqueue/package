@@ -18,11 +18,6 @@ class Dispatcher
         return $this->handleAsync($job);
     }
 
-    protected function handleSync($job)
-    {
-        return dispatch($job);
-    }
-
     protected function handleAsync($job)
     {
         $job->id = dispatch($job);
@@ -32,6 +27,11 @@ class Dispatcher
         }
 
         return $job->id;
+    }
+
+    protected function handleSync($job)
+    {
+        return dispatch($job);
     }
 
     protected function sendJob($job)

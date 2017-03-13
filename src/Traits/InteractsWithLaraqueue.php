@@ -3,9 +3,9 @@
 namespace Laraqueue\Traits;
 
 use Carbon\Carbon;
+use Laraqueue\Events\JobReserved;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
-use Laraqueue\Events\JobReserved;
 
 trait InteractsWithLaraqueue
 {
