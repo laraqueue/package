@@ -24,8 +24,15 @@ class LaraqueueServiceProvider extends ServiceProvider
 
     use InteractsWithLaraqueue;
 
+    /**
+     * Boots service provider.
+     */
     public function boot()
     {
+        $this->publishes([
+            __DIR__.'/../config/laraqueue.php' => config_path('laraqueue.php'),
+        ], 'config');
+
         if(!$this->getKey()) {
             return;
         }

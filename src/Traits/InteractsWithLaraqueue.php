@@ -168,7 +168,7 @@ trait InteractsWithLaraqueue
      */
     public function getKey()
     {
-        return config('services.laraqueue.key');
+        return config('laraqueue.key');
     }
 
     /**

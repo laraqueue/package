@@ -33,18 +33,17 @@ Laraqueue\Package\LaraqueueServiceProvider::class,
 ...
 ```
 
+**Publish**
+```php
+php artisan vendor:publish --provider="Laraqueue\Providers\LaraqueueServiceProvider"
+```
+
 **Add App Key**
 
 
 ```
+# .env
 LARAQUEUE_KEY=<your key here>
-```
-
-```php
-// config/services.php
-'laraqueue' => [
-    'key' => env('LARAQUEUE_KEY')
-]
 ```
 
 ### Usage
