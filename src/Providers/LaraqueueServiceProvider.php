@@ -4,7 +4,6 @@ namespace Laraqueue\Providers;
 
 use Laraqueue\Support\Client;
 use Laraqueue\Support\Sender;
-use Laraqueue\Support\Connector;
 use Laraqueue\Support\Dispatcher;
 use Illuminate\Support\Facades\Queue;
 use Illuminate\Queue\Events\JobFailed;
