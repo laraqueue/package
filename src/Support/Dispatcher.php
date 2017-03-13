@@ -4,11 +4,22 @@ namespace Laraqueue\Support;
 
 use Laraqueue\Traits\InteractsWithLaraqueue;
 
+/**
+ * Class Dispatcher
+ *
+ * @package Laraqueue\Support
+ */
 class Dispatcher
 {
 
     use InteractsWithLaraqueue;
 
+    /**
+     * Dispatches job.
+     *
+     * @param mixed $job
+     * @return int
+     */
     public function dispatch($job)
     {
         if($this->isSync($job)) {
@@ -18,6 +29,12 @@ class Dispatcher
         return $this->handleAsync($job);
     }
 
+    /**
+     * Handles asynchronous job.
+     *
+     * @param mixed $job
+     * @return int
+     */
     protected function handleAsync($job)
     {
         $job->id = dispatch($job);
@@ -29,11 +46,22 @@ class Dispatcher
         return $job->id;
     }
 
+    /**
+     * Handles synchronous job.
+     *
+     * @param mixed $job
+     * @return int
+     */
     protected function handleSync($job)
     {
         return dispatch($job);
     }
 
+    /**
+     * Sends job.
+     *
+     * @param mixed $job
+     */
     protected function sendJob($job)
     {
         app(Sender::class)->sendJob($job);

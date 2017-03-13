@@ -6,7 +6,6 @@ use Laraqueue\Support\Client;
 use Laraqueue\Support\Sender;
 use Laraqueue\Support\Connector;
 use Laraqueue\Support\Dispatcher;
-use Illuminate\Queue\QueueManager;
 use Illuminate\Support\Facades\Queue;
 use Illuminate\Queue\Events\JobFailed;
 use Illuminate\Support\ServiceProvider;
@@ -15,16 +14,15 @@ use Illuminate\Queue\Events\JobProcessing;
 use Laraqueue\Traits\InteractsWithLaraqueue;
 use Illuminate\Queue\Events\JobExceptionOccurred;
 
+/**
+ * Class LaraqueueServiceProvider
+ *
+ * @package Laraqueue\Providers
+ */
 class LaraqueueServiceProvider extends ServiceProvider
 {
 
     use InteractsWithLaraqueue;
-
-    protected $manager;
-
-    protected $queue;
-
-    protected $sender;
 
     public function boot()
     {
@@ -32,12 +30,12 @@ class LaraqueueServiceProvider extends ServiceProvider
             return;
         }
 
-        $this->manager = new QueueManager($this->app);
-        $this->sender = app(Sender::class);
-
         $this->registerListeners();
     }
 
+    /**
+     * Registers service provider.
+     */
     public function register()
     {
         $this->app->singleton(Client::class, function() {
@@ -47,6 +45,9 @@ class LaraqueueServiceProvider extends ServiceProvider
         $this->app->bind('Laraqueue', Dispatcher::class);
     }
 
+    /**
+     * Registers queue event listeners.
+     */
     protected function registerListeners()
     {
         Queue::before(function (JobProcessing $event) {
@@ -66,13 +67,18 @@ class LaraqueueServiceProvider extends ServiceProvider
         });
     }
 
+    /**
+     * Handles queue event.
+     *
+     * @param mixed $event
+     */
     protected function handleEvent($event)
     {
         if($this->isSync($event->job)) {
             return;
         }
 
-        $this->sender->sendEvent($event);
+        $this->app(Sender::class)->sendEvent($event);
     }
 
 }
