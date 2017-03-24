@@ -55,7 +55,7 @@ laraqueue(new RegisterUser($user));
 
 ### Official Documentation
 
-Documentation for Laraqueue can be found on the [Laraqueue website](https://laraqueue.com/docs).
+Coming Soon.
 
 ### License
 
