@@ -5,6 +5,7 @@ namespace Laraqueue\Providers;
 use Laraqueue\Support\Client;
 use Laraqueue\Support\Sender;
 use Laraqueue\Support\Dispatcher;
+use Academe\SerializeParser\Parser;
 use Illuminate\Support\Facades\Queue;
 use Illuminate\Queue\Events\JobFailed;
 use Illuminate\Support\ServiceProvider;
@@ -46,6 +47,9 @@ class LaraqueueServiceProvider extends ServiceProvider
     {
         $this->app->singleton(Client::class, function() {
             return new Client($this->getKey());
+        });
+        $this->app->singleton(Parser::class, function() {
+            return new Parser;
         });
         $this->app->singleton(Sender::class);
         $this->app->bind('Laraqueue', Dispatcher::class);

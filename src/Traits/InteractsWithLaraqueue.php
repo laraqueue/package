@@ -4,6 +4,7 @@ namespace Laraqueue\Traits;
 
 use Carbon\Carbon;
 use Laraqueue\Events\JobReserved;
+use Academe\SerializeParser\Parser;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 
@@ -68,7 +69,7 @@ trait InteractsWithLaraqueue
             'job' => [
                 'id' => $job->getJobId(),
                 'name' => $job->resolveName(),
-                'raw' => json_decode($job->getRawBody())->data->command,
+                'raw' => $this->cleanJobData(json_decode($job->getRawBody())->data->command),
             ],
             'queue' => $job->getQueue(),
             'request' => $this->getRequest(),
@@ -112,7 +113,7 @@ trait InteractsWithLaraqueue
             'job' => [
                 'id' => $job->id,
                 'name' => get_class($job),
-                'raw' => serialize($job),
+                'raw' => $this->cleanJobData(serialize($job)),
             ],
             'queue' => $queue,
             'request' => $this->getRequest(),
@@ -123,6 +124,24 @@ trait InteractsWithLaraqueue
         ];
 
         return $payload;
+    }
+
+
+    /**
+     * Recursively removes all attributes defined as `hidden` in config/laraqueue.php.
+     *
+     * @param string $data
+     * @return array
+     */
+    function cleanJobData($data)
+    {
+        $data = (array) app(Parser::class)->parse($data);
+
+        collect(config('laraqueue.hidden', []))->each(function($key) use (&$data) {
+            array_recursive_unset($data, $key);
+        });
+
+        return $data;
     }
 
     /**
