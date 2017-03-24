@@ -68,7 +68,7 @@ trait InteractsWithLaraqueue
             'job' => [
                 'id' => $job->getJobId(),
                 'name' => $job->resolveName(),
-                'raw' => json_encode($job),
+                'raw' => json_decode($job->getRawBody())->data->command,
             ],
             'queue' => $job->getQueue(),
             'request' => $this->getRequest(),
@@ -112,7 +112,7 @@ trait InteractsWithLaraqueue
             'job' => [
                 'id' => $job->id,
                 'name' => get_class($job),
-                'raw' => json_encode($job),
+                'raw' => serialize($job),
             ],
             'queue' => $queue,
             'request' => $this->getRequest(),
