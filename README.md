@@ -19,18 +19,14 @@ composer require laraqueue/package
 
 ```php
 // config/app.php
-...
 Laraqueue\Package\LaraqueueServiceProvider::class,
-...
 ```
 
 **Add Facade**
 
 ```php
 // config/app.php
-...
 'Laraqueue' => Laraqueue\Support\Dispatcher::class,
-...
 ```
 
 **Publish**
