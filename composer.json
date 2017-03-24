@@ -1,5 +1,5 @@
 {
-    "name": "laraqueue-package",
+    "name": "laraqueue/package",
     "description": "The Laraqueue Laravel Package",
     "keywords": ["laraqueue", "laravel", "package"],
     "homepage": "https://www.laraqueue.com",

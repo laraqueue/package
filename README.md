@@ -13,7 +13,7 @@ This is the official Laravel package for Laraqueue, the real-time queue manageme
 **Require via composer**
 
 ```bash
-composer require laraqueue-package
+composer require laraqueue/package
 ```
 **Add Service Provider**
 
