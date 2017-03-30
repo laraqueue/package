@@ -4,7 +4,6 @@ namespace Laraqueue\Traits;
 
 use Carbon\Carbon;
 use Laraqueue\Events\JobReserved;
-use Academe\SerializeParser\Parser;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 
@@ -130,12 +129,12 @@ trait InteractsWithLaraqueue
     /**
      * Recursively removes all attributes defined as `hidden` in config/laraqueue.php.
      *
-     * @param string $data
+     * @param mixed $job
      * @return array
      */
-    function cleanJobData($data)
+    function cleanJobData($job)
     {
-        $data = (array) app(Parser::class)->parse($data);
+        $data = (array) unserialize($job);
 
         collect(config('laraqueue.hidden', []))->each(function($key) use (&$data) {
             array_recursive_unset($data, $key);
