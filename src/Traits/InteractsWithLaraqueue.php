@@ -84,7 +84,6 @@ trait InteractsWithLaraqueue
                 'file' => $exception->getFile(),
                 'line' => $exception->getLine(),
                 'message' => $exception->getMessage(),
-                'trace' => $exception->getTrace(),
             ];
         }
 
