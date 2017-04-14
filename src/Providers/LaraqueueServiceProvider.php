@@ -30,7 +30,7 @@ class LaraqueueServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->publishes([
-            __DIR__.'/../config/laraqueue.php' => config_path('laraqueue.php'),
+            __DIR__.'/../assets/config/laraqueue.php' => config_path('laraqueue.php'),
         ], 'config');
 
         if(!$this->getKey()) {
@@ -84,11 +84,11 @@ class LaraqueueServiceProvider extends ServiceProvider
      */
     protected function handleEvent($event)
     {
-        if($this->isSync($event->job)) {
+        if($this->isSync($event->job) || $this->isLaraqueueJobEvent($event)) {
             return;
         }
 
-        app(Sender::class)->sendEvent($event);
+        $this->reportEvent($event);
     }
 
 }

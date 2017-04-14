@@ -5,5 +5,7 @@ return [
         'password'
     ],
 
-    'key' => ENV('LARAQUEUE_KEY')
+    'key' => ENV('LARAQUEUE_KEY'),
+
+    'queue' => 'laraqueue'
 ];

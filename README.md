@@ -54,9 +54,23 @@ Any attribute added will be recursively removed from all job data _before_ being
 
 ```
 
+**Set Queue Used By Laraqueue**
+
+Laraqueue uses queues to send report data to prevent any negative impact on your app's performance. It is recommended that Laraqueue uses it's own queue for this. The default is `laraqueue`. 
+```php
+// config/laraqueue.php
+
+'queue' => 'laraqueue'
+```
+
 
 ### Usage
-Laraqueue works with started, completed, failed, and exception events out of the box. If you wish to interact with reserved events, replace job Laravel dispatches with the Laraqueue dispatcher facade or the `laraqueue` helper function.
+Start a queue worker, using the queue configured above, to begin handling the transmission of Laraqueue report data.
+```bash
+$ php artistan queue:work --queue=laraqueue
+```
+
+Dispatch jobs using the Laraqueue dispatcher facade or the `laraqueue` helper function.
 ```php
 Laraqueue::dispatch(new RegisterUser($user));
 ```

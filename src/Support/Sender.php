@@ -4,6 +4,11 @@ namespace Laraqueue\Support;
 
 use Laraqueue\Traits\InteractsWithLaraqueue;
 
+/**
+ * Class Sender
+ *
+ * @package Laraqueue\Support
+ */
 class Sender
 {
 
@@ -46,6 +51,10 @@ class Sender
      */
     public function sendEvent($event)
     {
+        if($this->isLaraqueueJobEvent($event)) {
+            return;
+        }
+
         $this->post(
             $this->createPayloadFromEvent($event)
         );
@@ -54,12 +63,13 @@ class Sender
     /**
      * Sends job.
      *
+     * @param mixed $id
      * @param mixed $job
      */
-    public function sendJob($job)
+    public function sendJob($id, $job)
     {
         $this->post(
-            $this->createPayloadFromJob($job)
+            $this->createPayloadFromJob($id, $job)
         );
     }
 

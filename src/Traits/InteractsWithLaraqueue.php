@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use Laraqueue\Events\JobReserved;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
+use Laraqueue\Jobs\ReportToLaraqueue;
 
 /**
  * Class InteractsWithLaraqueue
@@ -211,6 +212,17 @@ trait InteractsWithLaraqueue
     }
 
     /**
+     * Validates event is a Laraqueue job event.
+     *
+     * @param mixed $event
+     * @return bool
+     */
+    protected function isLaraqueueJobEvent($event)
+    {
+        return $event->job->resolveName() === ReportToLaraqueue::class;
+    }
+
+    /**
      * Validates job is synchronous.
      *
      * @param mixed $job
@@ -219,6 +231,37 @@ trait InteractsWithLaraqueue
     protected function isSync($job)
     {
         return array_get($this->getQueueConfig($job), 'driver') === 'sync';
+    }
+
+    /**
+     * Reports to Laraqueue.
+     * @param array $payload
+     */
+    private function report(array $payload)
+    {
+        dispatch(
+            (new ReportToLaraqueue($payload))->onQueue(config('laraqueue.queue'))
+        );
+    }
+
+    /**
+     * Reports event to Laraqueue.
+     *
+     * @param mixed $event
+     */
+    protected function reportEvent($event)
+    {
+        $this->report($this->createPayloadFromEvent($event));
+    }
+
+    /**
+     * Reports job to Laraqueue.
+     *
+     * @param mixed $job
+     */
+    protected function reportJob($job)
+    {
+        $this->report($this->createPayloadFromJob($job));
     }
 
 }

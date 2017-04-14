@@ -40,7 +40,7 @@ class Dispatcher
         $job->id = dispatch($job);
 
         if($this->getKey()) {
-            $this->sendJob($job);
+            $this->reportJob($job);
         }
 
         return $job->id;
@@ -57,14 +57,9 @@ class Dispatcher
         return dispatch($job);
     }
 
-    /**
-     * Sends job.
-     *
-     * @param mixed $job
-     */
-    protected function sendJob($job)
+    public function post($payload)
     {
-        app(Sender::class)->sendJob($job);
+        return app(Sender::class)->post($payload);
     }
 
 }
