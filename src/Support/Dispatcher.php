@@ -37,13 +37,11 @@ class Dispatcher
      */
     protected function handleAsync($job)
     {
-        $job->id = dispatch($job);
-
         if($this->getKey()) {
             $this->reportJob($job);
         }
 
-        return $job->id;
+        return dispatch($job);
     }
 
     /**
