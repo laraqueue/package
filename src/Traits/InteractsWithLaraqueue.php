@@ -42,6 +42,7 @@ trait InteractsWithLaraqueue
         return [
             'argv' => gethostname(),
             'host' => array_get($_SERVER, 'argv'),
+            'php_version' => phpversion(),
             'root' => base_path(),
         ];
     }
@@ -71,6 +72,7 @@ trait InteractsWithLaraqueue
                 'name' => $job->resolveName(),
                 'raw' => $this->cleanJobData(json_decode($job->getRawBody())->data->command),
             ],
+            'laravel_version' => app()->version(),
             'queue' => $job->getQueue(),
             'request' => $this->getRequest(),
             'server' => $this->getServer(),
@@ -103,6 +105,7 @@ trait InteractsWithLaraqueue
         $queue = $this->getQueue($job);
 
         $payload = [
+            'attempts' => $job->attempts(),
             'connection' => [
                 'config' => $this->getConnectionByName($connectionName),
                 'name' => $connectionName,
@@ -114,6 +117,7 @@ trait InteractsWithLaraqueue
                 'name' => get_class($job),
                 'raw' => $this->cleanJobData(serialize($job)),
             ],
+            'laravel_version' => app()->version(),
             'queue' => $queue,
             'request' => $this->getRequest(),
             'server' => $this->getServer(),
