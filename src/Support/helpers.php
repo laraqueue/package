@@ -1,7 +1,5 @@
 <?php
 
-use Laraqueue\Facades\Laraqueue;
-
 if (!function_exists('array_recursive_unset')) {
     /**
      * Recursively unsets a key from any array.
@@ -20,18 +18,5 @@ if (!function_exists('array_recursive_unset')) {
         }
 
         return $array;
-    }
-}
-
-if (! function_exists('laraqueue')) {
-    /**
-     * Dispatches a job using Laraqueue's dispatcher.
-     *
-     * @param mixed $job
-     * @return int
-     */
-    function laraqueue($job)
-    {
-        return Laraqueue::dispatch($job);
     }
 }

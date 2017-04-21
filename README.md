@@ -22,13 +22,6 @@ composer require laraqueue/package
 Laraqueue\Package\LaraqueueServiceProvider::class,
 ```
 
-**Add Facade**
-```php
-// config/app.php
-
-'Laraqueue' => Laraqueue\Support\Dispatcher::class,
-```
-
 **Publish**
 ```php
 php artisan vendor:publish --provider="Laraqueue\Providers\LaraqueueServiceProvider"
@@ -44,7 +37,7 @@ LARAQUEUE_KEY=<your key here>
 
 **Add Hidden Model Attributes**
 
-Any attribute added will be recursively removed from all job data _before_ being sent to the Laraqueue API.
+Any attribute added will be recursively removed from all job data _before_ being sent to the Laraqueue API. By default, `password` is always hidden.
 ```php
 // config/laraqueue.php
 
@@ -54,29 +47,8 @@ Any attribute added will be recursively removed from all job data _before_ being
 
 ```
 
-**Set Queue Used By Laraqueue**
-
-Laraqueue uses queues to send report data to prevent any negative impact on your app's performance. It is recommended that Laraqueue uses it's own queue for this. The default is `laraqueue`. 
-```php
-// config/laraqueue.php
-
-'queue' => 'laraqueue'
-```
-
-
 ### Usage
-Start a queue worker, using the queue configured above, to begin handling the transmission of Laraqueue report data.
-```bash
-$ php artistan queue:work --queue=laraqueue
-```
-
-Dispatch jobs using the Laraqueue dispatcher facade or the `laraqueue` helper function.
-```php
-Laraqueue::dispatch(new RegisterUser($user));
-```
-```php
-laraqueue(new RegisterUser($user));
-```
+**That's it!** Laraqueue overrides the Laravel `BusServiceProvider::dispatch` method to report all non-sync jobs.
 
 
 ### Official Documentation

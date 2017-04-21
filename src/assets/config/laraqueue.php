@@ -6,6 +6,4 @@ return [
     ],
 
     'key' => ENV('LARAQUEUE_KEY'),
-
-    'queue' => 'laraqueue'
 ];

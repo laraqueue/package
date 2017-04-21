@@ -2,7 +2,6 @@
 
 namespace Laraqueue\Tests;
 
-use Academe\SerializeParser\Parser;
 use Laraqueue\Traits\InteractsWithLaraqueue;
 
 class CreatePayloadFromJobTest extends LaraqueueTestCase
@@ -12,14 +11,11 @@ class CreatePayloadFromJobTest extends LaraqueueTestCase
 
     protected $jobMock;
 
-    protected $parser;
-
     protected function getEnvironmentSetUp($app)
     {
         parent::getEnvironmentSetUp($app);
 
         $this->jobMock = new JobMock;
-        $this->parser = new Parser;
 
         $app['config']->set('laraqueue.hidden', [
             'foo'

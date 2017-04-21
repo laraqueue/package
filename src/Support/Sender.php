@@ -45,32 +45,23 @@ class Sender
     }
 
     /**
-     * Sends event.
+     * Reports event to Laraqueue.
      *
      * @param mixed $event
      */
-    public function sendEvent($event)
+    public function reportEvent($event)
     {
-        if($this->isLaraqueueJobEvent($event)) {
-            return;
-        }
-
-        $this->post(
-            $this->createPayloadFromEvent($event)
-        );
+        $this->post($this->createPayloadFromEvent($event));
     }
 
     /**
-     * Sends job.
+     * Reports job to Laraqueue.
      *
-     * @param mixed $id
      * @param mixed $job
      */
-    public function sendJob($id, $job)
+    public function reportJob($job)
     {
-        $this->post(
-            $this->createPayloadFromJob($id, $job)
-        );
+        $this->post($this->createPayloadFromJob($job));
     }
 
 }
